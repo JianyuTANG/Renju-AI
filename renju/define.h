@@ -20,7 +20,8 @@ using namespace std;
 
 #define GRID_NUM 16	//棋盘规模	
 extern int chessBoard[GRID_NUM][GRID_NUM]; //棋盘
-bool gameover(struct point node, int player); //判断是否游戏结束
+//bool gameover(struct point node, int player); //判断是否游戏结束
+bool gameover(); //判断是否游戏结束
 #endif
 
 
