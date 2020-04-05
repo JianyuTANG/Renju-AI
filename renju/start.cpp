@@ -3,6 +3,7 @@
 #include "printchessboard.h"
 #include "makemove.h"
 #include "interaction.h"
+#include "evaluate.h"
 
 int main()
 {
@@ -10,6 +11,7 @@ int main()
 	cout << "输入: newblack  电脑先手" << endl;
 	cout << "输入: newwhite  电脑后手" << endl;
 	cout << "输入: move x y  表示落子点" << endl;
+	evaluate();
     print();
 	
 	bool newgame = false;

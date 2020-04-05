@@ -4,4 +4,6 @@
 
 int evaluate();//估值算法，返回估值
 
+int evaluate_line(int* arr,int length,int chess);
+
 #endif
