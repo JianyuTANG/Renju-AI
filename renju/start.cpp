@@ -11,7 +11,12 @@ int main()
 	cout << "输入: newblack  电脑先手" << endl;
 	cout << "输入: newwhite  电脑后手" << endl;
 	cout << "输入: move x y  表示落子点" << endl;
+	clock_t startTime, endTime;
+	startTime = clock();
+	for(int i=0;i<100000;i++)
 	evaluate();
+	endTime = clock();
+	cout << "Totle Time : " << (double)(endTime - startTime) << "ms" << endl;
     print();
 	
 	bool newgame = false;

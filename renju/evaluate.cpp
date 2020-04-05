@@ -10,11 +10,9 @@ const int Dead[] = { 0,1,10,30,80,10000,10000,10000,10000,10000 };
 
 int evaluate()//估值算法，返回估值
 {
-	clock_t startTime,endTime;
-	startTime=clock();
 	// 1 denotes black, 2 denotes white and 0 denotes empty site.
 	int testBoard[15][15] = {   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-								{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+								{0, 0, 0, 2, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
 								{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 								{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 								{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -28,7 +26,6 @@ int evaluate()//估值算法，返回估值
 								{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 								{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 								{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
-
 	int black_score = 0;
 	int white_score = 0;
 	for (int row = 0; row < GRID_NUM; row++) // 检查行
@@ -66,10 +63,6 @@ int evaluate()//估值算法，返回估值
 				line[i] = testBoard[GRID_NUM - 1 - i][diag - GRID_NUM + 1 + i];
 			}
 		}
-		//cout << endl;
-		//for (int i = 0; i < len_line;i++)
-		//	cout << line[i];
-		//cout << endl;
 		black_score += evaluate_line(line, len_line, black);
 		white_score += evaluate_line(line, len_line, white);
 	}
@@ -93,17 +86,12 @@ int evaluate()//估值算法，返回估值
 				line[i] = testBoard[i][diag - GRID_NUM + 1 + i];
 			}
 		}
-		//cout << endl;
-		//for (int i = 0; i < len_line;i++)
-		//	cout << line[i];
-		//cout << endl;
 		black_score += evaluate_line(line, len_line, black);
 		white_score += evaluate_line(line, len_line, white);
 	}
+	
+	//cout << "black score: " << black_score << " white score: " << white_score << endl;
 
-	cout << "black score: "<<black_score << " white score: "<<white_score << endl;
-	endTime = clock();
-	cout << "Totle Time : " << (double)(endTime - startTime) / CLOCKS_PER_SEC << "s" << endl;
 	return  0;
 }
 
