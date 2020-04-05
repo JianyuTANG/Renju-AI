@@ -7,18 +7,17 @@ void input(bool isBlack)
 	int i, j;
 	bool valid = false;
 	fflush(stdin);
-	char a;
-	cin >> a;
+	getline(cin, temp);
 	while (!valid)
 	{
 		cin.clear();
 		getline(cin, temp);
-		printf("666");
+		// cout << temp;
 		int len = temp.size();
 		auto pos = temp.find(' ');
 		if (pos != 4)
 		{
-			cout << "输入不合法，请重新输入1" << endl;
+			cout << "输入不合法，请重新输入" << endl;
 			continue;
 		}
 		if (temp.substr(0, pos) != "move")
