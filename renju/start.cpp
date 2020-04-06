@@ -4,6 +4,9 @@
 #include "makemove.h"
 #include "interaction.h"
 #include "evaluate.h"
+#include <chrono>
+
+using namespace std;
 
 int main()
 {
@@ -11,13 +14,17 @@ int main()
 	cout << "输入: newblack  电脑先手" << endl;
 	cout << "输入: newwhite  电脑后手" << endl;
 	cout << "输入: move x y  表示落子点" << endl;
-	clock_t startTime, endTime;
-	startTime = clock();
-	for(int i=0;i<100000;i++)
-	evaluate();
-	endTime = clock();
-	cout << "Totle Time : " << (double)(endTime - startTime) << "ms" << endl;
-    print();
+
+	//evaluate();
+
+	//auto start = std::chrono::steady_clock::now();
+	//for(int i=0;i<100000;i++)
+	//	evaluate();
+	//auto end = std::chrono::steady_clock::now();
+	//auto duration = std::chrono::duration<float, std::milli>(end - start);
+	//cout << "Totle Time : " << duration.count() << "ms" << endl;
+
+	print();
 	
 	bool newgame = false;
 	bool isBlack = false;

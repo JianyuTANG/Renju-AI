@@ -12,14 +12,14 @@ int evaluate()//估值算法，返回估值
 {
 	// 1 denotes black, 2 denotes white and 0 denotes empty site.
 	int testBoard[15][15] = {   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-								{0, 0, 0, 2, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
 								{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 								{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 								{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-								{0, 0, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0},
-								{0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
-								{0, 0, 0, 0, 2, 1, 1, 0, 2, 0, 0, 0, 0, 0, 0},
-								{0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0},
+								{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+								{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+								{0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0},
+								{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+								{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 								{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 								{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 								{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -105,88 +105,146 @@ int evaluate_line(int* line, int length, int chess)
 	{
 		if (line[h] == chess) // score of chess
 		{
-			int t = h + 1; // 尾棋子
-			int space = 0; // empty inside
-			int loc_space = -1;
-			//cout << "length:"<<length << endl;
-			for (t=h+1; t < length; t++)
+			//5
+			if (line[h + 1] == chess && line[h + 2] == chess && line[h + 3] == chess && line[h + 4] == chess)
 			{
-				//cout<<"now t is:"<<t<<endl;
-				if (line[t] == chess)
-				{ 
-					continue;
-				}
-				else if (line[t - 1] == chess && line[t] == blank && t+1<length && line[t + 1] == chess)
-				{
-					space++;
-					loc_space = t;
-				}
-				else
-				{
-					break;
-				}
-			}
-			t--;
-			//cout << t << endl;
-			int len_chess = t - h + 1 - space;
-			//cout << "len_chess:" << len_chess<<" h:"<<h<<" t:"<<t << "space"<<space<<endl;
-			int life = (h - 1 >= 0 && line[h - 1] == blank) +(t + 1 < length && line[t + 1] == blank);
-			//cout <<"life:" <<life << endl;
-			if ( life==2 ) //两侧为空，活棋形
-			{
-				if (len_chess <= 3)
-					score += Live[len_chess];
-				else if (len_chess >= 4)
-				{
-					if (t - h + 1 == len_chess) // 连续的
-						score += Live[len_chess];
-					else // 非连续的
-					{
-						score += Live[3]; //算成活3
-					}
-				}
-			}
-			else if (life == 1) // 一侧为空，死棋形
-			{
-				if (len_chess <= 3)
-					score += Dead[len_chess];
-				else if (len_chess >= 4)
-				{
-					if (t - h + 1 == len_chess) // 连续的
-						score += Dead[len_chess];
-					else // 非连续的
-					{
-						score += Dead[4]; //算成死4
-					}
-				}
+				score += 10000000;
+				h = h + 5;
+				continue;
 			}
 
-			//搜索下一个棋形
-			if (loc_space == -1)
-				h = t + 1;
-			else
-				h = loc_space;
+			// 活4
+			if (h - 1 >= 0 && line[h - 1] == blank && line[h + 1] == chess && line[h + 2] == chess && line[h + 3] == chess && h + 4 < length && line[h + 4] == blank)
+			{
+				score += 300000;
+				h = h + 4;
+				continue;
+			}
+
+			//死4A
+			if (
+				line[h + 1] == chess && line[h + 2] == chess && line[h + 3] == chess &&
+				((h - 1 >= 0 && line[h - 1] == blank) + (h + 4 < length && line[h + 4] == blank) == 1)
+				)
+			{
+				score += 2500;
+				h = h + 4;
+				continue;
+			}
+
+			//死4B/C
+			if (
+				(h+4<length && line[h + 4] == chess)
+				&& ((line[h + 1] == chess) + (line[h + 2] == chess) + (line[h + 3] == chess) == 2)
+				&& ((line[h + 1] == blank) + (line[h + 2] == blank) + (line[h + 3] == blank) == 1)
+				)
+			{
+				score += 2800;
+				h = h + 5;
+				continue;
+			}
+
+			//活3
+			if (h - 1 >= 0 && line[h - 1] == blank && line[h + 1] == chess && line[h + 2] == chess && h + 3 < length && line[h + 3] == blank)
+				{
+					score += 3000;
+					h = h + 3;
+					continue;
+				}
+
+			//死3A
+			if (
+				(line[h + 1] == chess && line[h + 2] == chess)
+				&& ((h - 1 >= 0 && line[h - 1] == blank) + (h + 3 < length && line[h + 3] == blank) == 1)
+				&& ((h - 1 >= 0 && line[h - 1] == blank && h - 2 >= 0 && line[h - 2] == blank) || (h + 3 < length && line[h + 3] == blank && h + 4 < length && line[h + 4] == blank))
+				)
+			{
+				score += 500;
+				h = h + 3;
+				continue;
+			}
+
+			//死3B
+			if (
+				(h + 3<length && line[h + 3] == chess)
+				&& ((line[h + 1] == chess) + (line[h + 2] == chess) == 1)
+				&& ((line[h + 1] == blank) + (line[h + 2] == blank) == 1)
+				&& ((h - 1 >= 0 && line[h - 1] == blank) || (h + 4 < length && line[h + 4] == blank) )
+				)
+			{
+				score += 800;
+				h = h + 4;
+				continue;
+			}
+
+			//死3C
+			if (
+				(h+4<length && line[h + 4] == chess)
+				&& ((line[h + 1] == blank) + (line[h + 2] == blank) + (line[h + 3] == blank) == 2)
+				&& ((line[h + 1] == chess) + (line[h + 2] == chess) + (line[h + 3] == chess) == 1)
+				)
+			{
+				score += 600;
+				h = h + 5;
+				continue;
+			}
+
+			//死3D
+			if (
+				(h+4<length && line[h + 4] == chess && line[h + 2] == chess && line[h + 1] == blank && line[h + 3] == blank)
+				)
+			{
+				score += 550;
+				h = h + 5;
+				continue;
+			}
+
+			//活2
+			if (
+				h-3>=0 && line[h-3] == blank && line[h-2] == blank && line[h-1] == blank && h+4<length && line[h+1] == chess && line[h + 2] == blank && line[h + 3] == blank && line[h + 4] == blank
+				)
+			{
+				score += 650;
+				h = h + 4;
+				continue;
+			}
+
+			//死2A
+			if (
+				h - 3 >= 0 && (line[h -3] == blank && line[h-2] == blank && line[h-1] == blank && line[h + 1] == chess && line[h + 2] != blank)
+				|| (h - 1 >= 0 && line[h-1] != blank && h+4<length && line[h + 1] == chess && line[h + 2] == blank && line[h + 3] == blank && line[h + 4] == blank)
+				)
+			{
+				score += 150;
+				h = h + 2;
+				continue;
+			}
+
+			//死2B
+			if (
+				h - 2 >= 0 && line[h-2] == blank && line[h-1] == blank && h+4<length && line[h + 1] == blank && line[h + 2] == chess && line[h + 3] == blank && line[h + 4] == blank
+				)
+			{
+				score += 250;
+				h = h + 4;
+				continue;
+			}
+
+			//死2C
+			if (
+				h - 1 >= 0 && line[h -1] == blank && h+4<length && line[h + 1] == blank && line[h + 2] == blank && line[h + 3] == chess && line[h + 4] == blank
+				)
+			{
+				score += 200;
+				h = h + 4;
+				continue;
+			}
+
 		}
 	}
 
 	return score;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //由于五子棋搜索分支庞大，通常无法直接搜索到胜负终局，当搜索到一定深度时需要根据局面返回搜索结果。
