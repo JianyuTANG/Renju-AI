@@ -12,7 +12,15 @@ tuple<int, int, int> maxValue(int player, int& alpha, int& beta, int depth)
 	if (gameover())
 		return make_tuple(INT32_MIN, 0, 0);
 	if (depth == 0)
-		return make_tuple(evaluate(), 0, 0);
+	{
+		auto res = evaluate();
+		int score = 0;
+		if (player == black)
+			score = get<0>(res);
+		else
+			score = get<1>(res);
+		return make_tuple(score, 0, 0);
+	}
 
 	int v = INT32_MIN;
 	int ai, aj;
@@ -32,6 +40,7 @@ tuple<int, int, int> maxValue(int player, int& alpha, int& beta, int depth)
 					aj = j;
 					if (v >= beta)
 					{
+						chessBoard[i][j] = blank;
 						return make_tuple(v, ai, aj);
 					}
 					if (v > alpha)
@@ -51,7 +60,16 @@ tuple<int, int, int> minValue(int player, int& alpha, int& beta, int depth)
 	if (gameover())
 		return make_tuple(INT32_MAX, 0, 0);
 	if (depth == 0)
-		return make_tuple(evaluate(), 0, 0);
+	{
+		auto res = evaluate();
+		int score = 0;
+		if (player == black)
+			score = get<0>(res);
+		else
+			score = get<1>(res);
+		return make_tuple(score, 0, 0);
+	}
+		
 
 	int v = INT32_MAX;
 	int ai, aj;
@@ -71,6 +89,7 @@ tuple<int, int, int> minValue(int player, int& alpha, int& beta, int depth)
 					aj = j;
 					if (v <= alpha)
 					{
+						chessBoard[i][j] = blank;
 						return make_tuple(v, ai, aj);
 					}
 					if (v < beta)
@@ -88,7 +107,7 @@ tuple<int, int, int> minValue(int player, int& alpha, int& beta, int depth)
 void iterationDeepening(int player)
 {
 	tuple<int, int, int> ans;
-	for (int depth = 1; depth < 30; depth++)
+	for (int depth = 1; depth < 2; depth++)
 	{
 		auto start = std::chrono::steady_clock::now();
 

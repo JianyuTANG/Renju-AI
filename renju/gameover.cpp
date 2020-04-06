@@ -141,5 +141,5 @@ bool gameover()//ÅĞ¶ÏÊÇ·ñÓÎÏ·½áÊø
 		}
 	}
 
-	return true;
+	return false;
 }

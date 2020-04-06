@@ -1,8 +1,9 @@
 #include "define.h"
 #include "printchessboard.h"
-bool makeMove()
+bool makeMove(int player)
 {
 	//Ö´ÐÐÂä×Ó²Ù×÷£¨chessboard[i][j]=1 & chessboard[i][j]=2£©
+
 	return true;
 }
 

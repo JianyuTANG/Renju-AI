@@ -52,12 +52,22 @@ int main()
 			newgame = false;
 		}
 	}
+	string temp;
+	getline(cin, temp);
+	if (aiTurn == black)
+	{
+		cout << "AI×ßÆå" << endl;
+		chessBoard[8][8] = black;
+		print();
+		turn++;
+	}
 
 	while (1)
 	{
-		if ((turn % 2) == aiTurn)
+		if ((turn % 2) == (aiTurn % 2))
 		{
-			makeMove();
+			cout << "AI×ßÆå" << endl;
+			iterationDeepening(aiTurn);
 		}
 		else
 		{

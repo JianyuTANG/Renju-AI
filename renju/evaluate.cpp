@@ -8,7 +8,7 @@ const int Live[] = { 0,1,40,100,1000,10000,10000,10000,10000,10000 };
 const int Dead[] = { 0,1,10,30,80,10000,10000,10000,10000,10000 };
 //#define
 
-int evaluate()//估值算法，返回估值
+tuple<int, int> evaluate()//估值算法，返回估值
 {
 	// 1 denotes black, 2 denotes white and 0 denotes empty site.
 	//int testBoard[15][15] = {   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -26,20 +26,20 @@ int evaluate()//估值算法，返回估值
 	//							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 	//							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 	//							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
-	testBoard = chessBoard;
+	// testBoard = chessBoard;
 	int black_score = 0;
 	int white_score = 0;
 	for (int row = 0; row < GRID_NUM; row++) // 检查行
 	{
-		black_score += evaluate_line(testBoard[row], GRID_NUM, black);
-		white_score += evaluate_line(testBoard[row], GRID_NUM, white);
+		black_score += evaluate_line(chessBoard[row], GRID_NUM, black);
+		white_score += evaluate_line(chessBoard[row], GRID_NUM, white);
 	}
 	for (int col = 0; col < GRID_NUM; col++) // 检查列
 	{
 		int line[GRID_NUM];
 		for (int i = 0; i < GRID_NUM; i++)
 		{
-			line[i] = testBoard[i][col];
+			line[i] = chessBoard[i][col];
 		}
 		black_score += evaluate_line(line, GRID_NUM, black);
 		white_score += evaluate_line(line, GRID_NUM, white);
@@ -53,7 +53,7 @@ int evaluate()//估值算法，返回估值
 			len_line = 1 + diag;
 			for (int i = 0; i < len_line; i++)
 			{
-				line[i] = testBoard[len_line - 1 - i][i];
+				line[i] = chessBoard[len_line - 1 - i][i];
 			}
 		}
 		else
@@ -61,7 +61,7 @@ int evaluate()//估值算法，返回估值
 			len_line = 2*GRID_NUM -1 - diag;
 			for (int i = 0; i < len_line; i++)
 			{
-				line[i] = testBoard[GRID_NUM - 1 - i][diag - GRID_NUM + 1 + i];
+				line[i] = chessBoard[GRID_NUM - 1 - i][diag - GRID_NUM + 1 + i];
 			}
 		}
 		black_score += evaluate_line(line, len_line, black);
@@ -76,7 +76,7 @@ int evaluate()//估值算法，返回估值
 			len_line = 1 + diag;
 			for (int i = 0; i < len_line; i++)
 			{
-				line[i] = testBoard[GRID_NUM - len_line + i][i];
+				line[i] = chessBoard[GRID_NUM - len_line + i][i];
 			}
 		}
 		else
@@ -84,7 +84,7 @@ int evaluate()//估值算法，返回估值
 			len_line = 2 * GRID_NUM - 1 - diag;
 			for (int i = 0; i < len_line; i++)
 			{
-				line[i] = testBoard[i][diag - GRID_NUM + 1 + i];
+				line[i] = chessBoard[i][diag - GRID_NUM + 1 + i];
 			}
 		}
 		black_score += evaluate_line(line, len_line, black);
@@ -93,7 +93,7 @@ int evaluate()//估值算法，返回估值
 	
 	//cout << "black score: " << black_score << " white score: " << white_score << endl;
 
-	return  0;
+	return  make_tuple(black_score, white_score);
 }
 
 int evaluate_line(int* line, int length, int chess)

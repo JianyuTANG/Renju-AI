@@ -1,13 +1,14 @@
 #pragma once
 #include "interaction.h"
 
-void input(bool isBlack)
+void input(int player)
 {
 	string temp;
 	int i, j;
 	bool valid = false;
-	fflush(stdin);
-	getline(cin, temp);
+	//fflush(stdin);
+	//getline(cin, temp);
+	cout << "请您走棋" << endl;
 	while (!valid)
 	{
 		cin.clear();
@@ -51,8 +52,9 @@ void input(bool isBlack)
 		}
 		cout << "输入不合法，请重新输入" << endl;
 	}
-	if (isBlack)
+	/*if (isBlack)
 		chessBoard[i][j] = white;
 	else
-		chessBoard[i][j] = black;
+		chessBoard[i][j] = black;*/
+	chessBoard[i][j] = nextTurn(player);
 }
