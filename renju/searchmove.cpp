@@ -7,6 +7,23 @@
 #include <tuple>
 #include <chrono>
 
+bool checkNeighbor(int x, int y)
+{
+	for (int i = x - 2; i <= x + 2; i++)
+	{
+		if (i < 1)
+			continue;
+		for (int j = y - 2; j <= y + 2; j++)
+		{
+			if (j < 1)
+				continue;
+			if (chessBoard[i][j])
+				return true;
+		}
+	}
+	return false;
+}
+
 tuple<int, int, int> maxValue(int player, int& alpha, int& beta, int depth)
 {
 	if (gameover())
@@ -28,7 +45,7 @@ tuple<int, int, int> maxValue(int player, int& alpha, int& beta, int depth)
 	{
 		for (int j = 1; j <= 15; j++)
 		{
-			if (chessBoard[i][j] == blank)
+			if (chessBoard[i][j] == blank && checkNeighbor(i, j))
 			{
 				chessBoard[i][j] = player;
 				auto temp = minValue(nextTurn(player), alpha, beta, depth - 1);
@@ -77,7 +94,7 @@ tuple<int, int, int> minValue(int player, int& alpha, int& beta, int depth)
 	{
 		for (int j = 1; j <= 15; j++)
 		{
-			if (chessBoard[i][j] == blank)
+			if (chessBoard[i][j] == blank && checkNeighbor(i, j))
 			{
 				chessBoard[i][j] = player;
 				auto temp = maxValue(nextTurn(player), alpha, beta, depth - 1);
@@ -107,7 +124,7 @@ tuple<int, int, int> minValue(int player, int& alpha, int& beta, int depth)
 int iterationDeepening(int player)
 {
 	tuple<int, int, int> ans;
-	for (int depth = 1; depth < 3; depth++)
+	for (int depth = 1; depth < 6; depth++)
 	{
 		auto start = std::chrono::steady_clock::now();
 
