@@ -4,7 +4,7 @@
 void input(int player)
 {
 	string temp;
-	int i, j;
+	int i = 0, j = 0;
 	bool valid = false;
 	//fflush(stdin);
 	//getline(cin, temp);

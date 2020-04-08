@@ -66,8 +66,19 @@ int main()
 	{
 		if ((turn % 2) == (aiTurn % 2))
 		{
+			
+			int temp = iterationDeepening(aiTurn);
+			if (temp == 1)
+			{
+				cout << "您已获胜" << endl;
+				return 0;
+			}
+			else if (temp == 2)
+			{
+				cout << "AI获胜" << endl;
+				return 0;
+			}
 			cout << "AI走棋" << endl;
-			iterationDeepening(aiTurn);
 		}
 		else
 		{

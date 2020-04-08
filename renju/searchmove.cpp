@@ -23,7 +23,7 @@ tuple<int, int, int> maxValue(int player, int& alpha, int& beta, int depth)
 	}
 
 	int v = INT32_MIN;
-	int ai, aj;
+	int ai = 0, aj = 0;
 	for (int i = 1; i <= 15; i++)
 	{
 		for (int j = 1; j <= 15; j++)
@@ -72,7 +72,7 @@ tuple<int, int, int> minValue(int player, int& alpha, int& beta, int depth)
 		
 
 	int v = INT32_MAX;
-	int ai, aj;
+	int ai = 0, aj = 0;
 	for (int i = 1; i <= 15; i++)
 	{
 		for (int j = 1; j <= 15; j++)
@@ -104,10 +104,10 @@ tuple<int, int, int> minValue(int player, int& alpha, int& beta, int depth)
 	return make_tuple(v, ai, aj);
 }
 
-void iterationDeepening(int player)
+int iterationDeepening(int player)
 {
 	tuple<int, int, int> ans;
-	for (int depth = 1; depth < 2; depth++)
+	for (int depth = 1; depth < 3; depth++)
 	{
 		auto start = std::chrono::steady_clock::now();
 
@@ -116,13 +116,27 @@ void iterationDeepening(int player)
 
 		auto end = std::chrono::steady_clock::now();
 		auto duration = std::chrono::duration<float, std::milli>(end - start);
-		if (duration.count() > 1000)
+		if (duration.count() > 100)
 		{
 			break;
 		}
 	}
-	int i = get<1>(ans), j = get<2>(ans);
+	int i = get<1>(ans), j = get<2>(ans), score = get<0>(ans);
+	if (i == 0 && j == 0)
+	{
+		cout << score << endl;
+	}
+	if (score == INT32_MIN)
+	{
+		return 1;
+	}
+	else if (score == INT32_MAX)
+	{
+		return 2;
+	}
+	
 	chessBoard[i][j] = player;
+	return 0;
 }
 
 int searchMove() //ËÑË÷º¯ÊıÖ÷Ìå
