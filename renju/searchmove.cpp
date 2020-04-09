@@ -135,6 +135,7 @@ int iterationDeepening(int player)
 		auto duration = std::chrono::duration<float, std::milli>(end - start);
 		if (duration.count() > 100)
 		{
+			cout << "timeout" << endl;
 			break;
 		}
 	}

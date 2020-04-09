@@ -48,7 +48,7 @@ int main()
 			
 		else
 		{
-			cout << "输入不合法，请重新输入22" << endl;
+			cout << "输入不合法，请重新输入" << endl;
 			newgame = false;
 		}
 	}
