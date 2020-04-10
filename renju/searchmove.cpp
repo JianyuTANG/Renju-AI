@@ -11,11 +11,11 @@ bool checkNeighbor(int x, int y)
 {
 	for (int i = x - 2; i <= x + 2; i++)
 	{
-		if (i < 1)
+		if (i < 1 || i > 14)
 			continue;
 		for (int j = y - 2; j <= y + 2; j++)
 		{
-			if (j < 1)
+			if (j < 1 || j > 14)
 				continue;
 			if (chessBoard[i][j])
 				return true;
@@ -28,11 +28,11 @@ void regNeighbor(int x, int y)
 {
 	for (int i = x - 2; i <= x + 2; i++)
 	{
-		if (i < 1)
+		if (i < 1 || i > 14)
 			continue;
 		for (int j = y - 2; j <= y + 2; j++)
 		{
-			if (j < 1)
+			if (j < 1 || j > 14)
 				continue;
 			if (!statusBoard[i][j])
 				statusBoard[i][j] = turnNum;
@@ -44,11 +44,11 @@ void regNeighbor2(int x, int y)
 {
 	for (int i = x - 1; i <= x + 1; i++)
 	{
-		if (i < 1)
+		if (i < 1 || i > 14)
 			continue;
 		for (int j = y - 1; j <= y + 1; j++)
 		{
-			if (j < 1)
+			if (j < 1 || j > 14)
 				continue;
 			if (!statusBoard[i][j])
 				statusBoard[i][j] = turnNum;
@@ -60,11 +60,11 @@ void unregNeighbor(int x, int y)
 {
 	for (int i = x - 2; i <= x + 2; i++)
 	{
-		if (i < 1)
+		if (i < 1 || i > 14)
 			continue;
 		for (int j = y - 2; j <= y + 2; j++)
 		{
-			if (j < 1)
+			if (j < 1 || j > 14)
 				continue;
 			if (statusBoard[i][j] == turnNum)
 				statusBoard[i][j] = 0;
@@ -76,11 +76,11 @@ void unregNeighbor2(int x, int y)
 {
 	for (int i = x - 1; i <= x + 1; i++)
 	{
-		if (i < 1)
+		if (i < 1 || i > 14)
 			continue;
 		for (int j = y - 1; j <= y + 1; j++)
 		{
-			if (j < 1)
+			if (j < 1 || j > 14)
 				continue;
 			if (statusBoard[i][j] == turnNum)
 				statusBoard[i][j] = 0;
@@ -104,9 +104,9 @@ tuple<int, int, int> maxValue(int player, int& alpha, int& beta, int depth)
 
 	int v = INT32_MIN;
 	int ai = 0, aj = 0;
-	for (int i = 1; i <= 15; i++)
+	for (int i = 1; i <= 14; i++)
 	{
-		for (int j = 1; j <= 15; j++)
+		for (int j = 1; j <= 14; j++)
 		{
 			if (chessBoard[i][j] == blank && statusBoard[i][j])
 			{
@@ -158,9 +158,9 @@ tuple<int, int, int> minValue(int player, int& alpha, int& beta, int depth)
 
 	int v = INT32_MAX;
 	int ai = 0, aj = 0;
-	for (int i = 1; i <= 15; i++)
+	for (int i = 1; i <= 14; i++)
 	{
-		for (int j = 1; j <= 15; j++)
+		for (int j = 1; j <= 14; j++)
 		{
 			if (chessBoard[i][j] == blank && checkNeighbor(i, j))
 			{
