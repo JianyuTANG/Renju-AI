@@ -94,12 +94,11 @@ tuple<int, int, int> maxValue(int player, int& alpha, int& beta, int depth)
 		return make_tuple(INT32_MIN, 0, 0);
 	if (depth == 0)
 	{
-		auto res = evaluate();
-		int score = 0;
+		int score = evaluate();
 		if (player == black)
-			score = get<0>(res);
+			score = score;
 		else
-			score = get<1>(res);
+			score = -score;
 		return make_tuple(score, 0, 0);
 	}
 
@@ -148,12 +147,11 @@ tuple<int, int, int> minValue(int player, int& alpha, int& beta, int depth)
 		return make_tuple(INT32_MAX, 0, 0);
 	if (depth == 0)
 	{
-		auto res = evaluate();
-		int score = 0;
+		int score = evaluate();
 		if (player == black)
-			score = get<0>(res);
+			score = score;
 		else
-			score = get<1>(res);
+			score = -score;
 		return make_tuple(score, 0, 0);
 	}
 		
