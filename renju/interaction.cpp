@@ -1,5 +1,6 @@
 #pragma once
 #include "interaction.h"
+#include "searchmove.h"
 
 void input(int player)
 {
@@ -57,4 +58,5 @@ void input(int player)
 	else
 		chessBoard[i][j] = black;*/
 	chessBoard[i][j] = nextTurn(player);
+	regNeighbor(i, j);
 }

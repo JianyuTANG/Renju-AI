@@ -24,6 +24,70 @@ bool checkNeighbor(int x, int y)
 	return false;
 }
 
+void regNeighbor(int x, int y)
+{
+	for (int i = x - 2; i <= x + 2; i++)
+	{
+		if (i < 1)
+			continue;
+		for (int j = y - 2; j <= y + 2; j++)
+		{
+			if (j < 1)
+				continue;
+			if (!statusBoard[i][j])
+				statusBoard[i][j] = turnNum;
+		}
+	}
+}
+
+void regNeighbor2(int x, int y)
+{
+	for (int i = x - 1; i <= x + 1; i++)
+	{
+		if (i < 1)
+			continue;
+		for (int j = y - 1; j <= y + 1; j++)
+		{
+			if (j < 1)
+				continue;
+			if (!statusBoard[i][j])
+				statusBoard[i][j] = turnNum;
+		}
+	}
+}
+
+void unregNeighbor(int x, int y)
+{
+	for (int i = x - 2; i <= x + 2; i++)
+	{
+		if (i < 1)
+			continue;
+		for (int j = y - 2; j <= y + 2; j++)
+		{
+			if (j < 1)
+				continue;
+			if (statusBoard[i][j] == turnNum)
+				statusBoard[i][j] = 0;
+		}
+	}
+}
+
+void unregNeighbor2(int x, int y)
+{
+	for (int i = x - 1; i <= x + 1; i++)
+	{
+		if (i < 1)
+			continue;
+		for (int j = y - 1; j <= y + 1; j++)
+		{
+			if (j < 1)
+				continue;
+			if (statusBoard[i][j] == turnNum)
+				statusBoard[i][j] = 0;
+		}
+	}
+}
+
 tuple<int, int, int> maxValue(int player, int& alpha, int& beta, int depth)
 {
 	if (gameover())
@@ -45,9 +109,11 @@ tuple<int, int, int> maxValue(int player, int& alpha, int& beta, int depth)
 	{
 		for (int j = 1; j <= 15; j++)
 		{
-			if (chessBoard[i][j] == blank && checkNeighbor(i, j))
+			if (chessBoard[i][j] == blank && statusBoard[i][j])
 			{
 				chessBoard[i][j] = player;
+				regNeighbor2(i, j);
+				turnNum++;
 				auto temp = minValue(nextTurn(player), alpha, beta, depth - 1);
 				int val = get<0>(temp);
 				if (val > v)
@@ -58,6 +124,8 @@ tuple<int, int, int> maxValue(int player, int& alpha, int& beta, int depth)
 					if (v >= beta)
 					{
 						chessBoard[i][j] = blank;
+						turnNum--;
+						unregNeighbor2(i, j);
 						return make_tuple(v, ai, aj);
 					}
 					if (v > alpha)
@@ -66,6 +134,8 @@ tuple<int, int, int> maxValue(int player, int& alpha, int& beta, int depth)
 					}
 				}
 				chessBoard[i][j] = blank;
+				turnNum--;
+				unregNeighbor2(i, j);
 			}
 		}
 	}
@@ -97,6 +167,8 @@ tuple<int, int, int> minValue(int player, int& alpha, int& beta, int depth)
 			if (chessBoard[i][j] == blank && checkNeighbor(i, j))
 			{
 				chessBoard[i][j] = player;
+				regNeighbor2(i, j);
+				turnNum++;
 				auto temp = maxValue(nextTurn(player), alpha, beta, depth - 1);
 				int val = get<0>(temp);
 				if (val < v)
@@ -107,6 +179,8 @@ tuple<int, int, int> minValue(int player, int& alpha, int& beta, int depth)
 					if (v <= alpha)
 					{
 						chessBoard[i][j] = blank;
+						turnNum--;
+						unregNeighbor2(i, j);
 						return make_tuple(v, ai, aj);
 					}
 					if (v < beta)
@@ -115,6 +189,8 @@ tuple<int, int, int> minValue(int player, int& alpha, int& beta, int depth)
 					}
 				}
 				chessBoard[i][j] = blank;
+				turnNum--;
+				unregNeighbor2(i, j);
 			}
 		}
 	}
@@ -124,7 +200,7 @@ tuple<int, int, int> minValue(int player, int& alpha, int& beta, int depth)
 int iterationDeepening(int player)
 {
 	tuple<int, int, int> ans;
-	for (int depth = 1; depth < 6; depth++)
+	for (int depth = 1; depth < DEPTH; depth++)
 	{
 		auto start = std::chrono::steady_clock::now();
 
@@ -135,7 +211,7 @@ int iterationDeepening(int player)
 		auto duration = std::chrono::duration<float, std::milli>(end - start);
 		if (duration.count() > 100)
 		{
-			cout << "timeout" << endl;
+			cout << "timeout: level " << depth << endl;
 			break;
 		}
 	}
@@ -154,6 +230,8 @@ int iterationDeepening(int player)
 	}
 	
 	chessBoard[i][j] = player;
+	regNeighbor(i, j);
+	//turnNum++;
 	return 0;
 }
 

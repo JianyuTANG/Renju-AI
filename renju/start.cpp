@@ -25,10 +25,19 @@ int main()
 	//cout << "Totle Time : " << duration.count() << "ms" << endl;
 
 	print();
+
+	/*for (int i = 0; i < GRID_NUM; i++)
+	{
+		for (int j = 0; j < GRID_NUM; j++)
+		{
+			cout << statusBoard[i][j] << " ";
+		}
+		cout << endl;
+	}*/
 	
 	bool newgame = false;
 	bool isBlack = false;
-	int turn = black;
+	//int turn = black;
 	int aiTurn;
 	while (!newgame)
 	{
@@ -58,13 +67,14 @@ int main()
 	{
 		cout << "AI走棋" << endl;
 		chessBoard[8][8] = black;
+		regNeighbor(8, 8);
 		print();
-		turn++;
+		turnNum++;
 	}
 
 	while (1)
 	{
-		if ((turn % 2) == (aiTurn % 2))
+		if ((turnNum % 2) == (aiTurn % 2))
 		{
 			
 			int temp = iterationDeepening(aiTurn);
@@ -88,13 +98,13 @@ int main()
 
 		if (gameover())
 		{
-			if ((turn % 2) == aiTurn)
+			if ((turnNum % 2) == aiTurn)
 				cout << "AI获胜" << endl;
 			else
 				cout << "您获得了胜利" << endl;
 			break;
 		}
-		turn++;
+		turnNum++;
 	}
 	return 0;
 }
