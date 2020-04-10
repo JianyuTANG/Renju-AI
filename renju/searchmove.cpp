@@ -88,7 +88,7 @@ void unregNeighbor2(int x, int y)
 	}
 }
 
-tuple<int, int, int> maxValue(int player, int& alpha, int& beta, int depth)
+tuple<int, int, int> maxValue(int player, int alpha, int beta, int depth)
 {
 	if (gameover())
 		return make_tuple(INT32_MIN, 0, 0);
@@ -141,7 +141,7 @@ tuple<int, int, int> maxValue(int player, int& alpha, int& beta, int depth)
 	return make_tuple(v, ai, aj);
 }
 
-tuple<int, int, int> minValue(int player, int& alpha, int& beta, int depth)
+tuple<int, int, int> minValue(int player, int alpha, int beta, int depth)
 {
 	if (gameover())
 		return make_tuple(INT32_MAX, 0, 0);
@@ -202,8 +202,8 @@ int iterationDeepening(int player)
 	{
 		auto start = std::chrono::steady_clock::now();
 
-		int alpha = INT32_MIN, beta = INT32_MAX;
-		ans = maxValue(player, alpha, beta, depth);
+		// int alpha = INT32_MIN, beta = INT32_MAX;
+		ans = maxValue(player, INT32_MIN, INT32_MAX, depth);
 
 		auto end = std::chrono::steady_clock::now();
 		auto duration = std::chrono::duration<float, std::milli>(end - start);
