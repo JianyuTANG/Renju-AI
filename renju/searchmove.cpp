@@ -212,9 +212,9 @@ tuple<int, int, int> minValue(int player, int alpha, int beta, int depth, LINE* 
 	{
 		int score = evaluate();
 		if (player == black)
-			score = score;
-		else
 			score = -score;
+		else
+			score = score;
 		cLine->cmove = 0;
 		return make_tuple(score, 0, 0);
 	}
