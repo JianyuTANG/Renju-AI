@@ -14,6 +14,7 @@ int main()
 	cout << "输入: newblack  电脑先手" << endl;
 	cout << "输入: newwhite  电脑后手" << endl;
 	cout << "输入: move x y  表示落子点" << endl;
+	cout << "输入: regret    悔棋一手" << endl;
 
 	//evaluate();
 
