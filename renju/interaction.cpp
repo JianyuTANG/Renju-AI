@@ -19,7 +19,7 @@ void input(int player)
 		// cout << temp;
 		int len = temp.size();
 		auto pos = temp.find(' ');
-		if (temp == "back") // »ÚÆå
+		if (temp == "regret") // »ÚÆå
 		{
 			if (chess_order.size() > 1)
 			{
