@@ -2,15 +2,13 @@
 #include "interaction.h"
 #include "searchmove.h"
 
-vector<tuple<int, int, int>> chess_order;
+vector<tuple<int, int, int>> chess_record;
 
 void input(int player)
 {
 	string temp;
 	int i = 0, j = 0;
 	bool valid = false;
-	//fflush(stdin);
-	//getline(cin, temp);
 	cout << "请您走棋" << endl;
 	while (!valid)
 	{
@@ -21,12 +19,12 @@ void input(int player)
 		auto pos = temp.find(' ');
 		if (temp == "regret") // 悔棋
 		{
-			if (chess_order.size() > 1)
+			if (chess_record.size() > 1)
 			{
-				auto last_ai_chess = chess_order.back();
-				chess_order.pop_back();
-				auto last_player_chess = chess_order.back();
-				chess_order.pop_back();
+				auto last_ai_chess = chess_record.back();
+				chess_record.pop_back();
+				auto last_player_chess = chess_record.back();
+				chess_record.pop_back();
 				int i = get<1>(last_ai_chess);
 				int j = get<2>(last_ai_chess);
 				chessBoard[i][j] = blank;
@@ -80,13 +78,10 @@ void input(int player)
 		}
 		cout << "输入不合法，请重新输入" << endl;
 	}
-	/*if (isBlack)
-		chessBoard[i][j] = white;
-	else
-		chessBoard[i][j] = black;*/
+
 	chessBoard[i][j] = nextTurn(player);
 
-	chess_order.push_back(make_tuple(nextTurn(player), i, j));
+	chess_record.push_back(make_tuple(nextTurn(player), i, j));
 
 	regNeighbor(i, j);
 }

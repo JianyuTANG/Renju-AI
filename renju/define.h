@@ -26,7 +26,7 @@ using namespace std;
 extern int chessBoard[GRID_NUM][GRID_NUM]; //棋盘
 extern int statusBoard[GRID_NUM][GRID_NUM]; //status
 extern int turnNum;
-extern vector<tuple<int,int,int>> chess_order; // 依次落子的顺序
+extern vector<tuple<int,int,int>> chess_record; // 依次落子的顺序
 //bool gameover(struct point node, int player); //判断是否游戏结束
 bool gameover(); //判断是否游戏结束
 #endif
