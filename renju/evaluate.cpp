@@ -178,6 +178,16 @@ int evaluate_line(int* line, int length, int chess)
 				continue;
 			}
 
+			//ËÀ3D
+			if (
+				(h + 4 < length && line[h + 4] == chess && line[h + 2] == chess && line[h + 1] == blank && line[h + 3] == blank)
+				)
+			{
+				score += 550;
+				h = h + 5;
+				continue;
+			}
+
 			//ËÀ3C
 			if (
 				(h+4<length && line[h + 4] == chess)
@@ -186,16 +196,6 @@ int evaluate_line(int* line, int length, int chess)
 				)
 			{
 				score += 600;
-				h = h + 5;
-				continue;
-			}
-
-			//ËÀ3D
-			if (
-				(h+4<length && line[h + 4] == chess && line[h + 2] == chess && line[h + 1] == blank && line[h + 3] == blank)
-				)
-			{
-				score += 550;
 				h = h + 5;
 				continue;
 			}

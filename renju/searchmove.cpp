@@ -367,6 +367,7 @@ int iterationDeepening(int player)
 	}*/
 	
 	chessBoard[i][j] = player;
+	chess_order.push_back(make_tuple(player, i, j));
 	regNeighbor(i, j);
 	//turnNum++;
 	return 0;

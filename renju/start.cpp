@@ -67,6 +67,7 @@ int main()
 	{
 		cout << "AI×ßÆå" << endl;
 		chessBoard[8][8] = black;
+		chess_order.push_back(make_tuple(black, 8, 8));
 		regNeighbor(8, 8);
 		print();
 		turnNum++;
