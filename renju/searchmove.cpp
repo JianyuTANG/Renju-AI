@@ -341,18 +341,30 @@ int iterationDeepening(int player)
 	}
 
 	int i = get<1>(ans), j = get<2>(ans), score = get<0>(ans);
-	if (i == 0 && j == 0)
+	/*if (i == 0 && j == 0)
 	{
 		cout << score << endl;
-	}
+	}*/
 	if (score == INT32_MIN)
 	{
-		return 1;
+		for (int ii = 1; ii < 15; ii++)
+		{
+			for (int jj = 1; jj < 15; jj++)
+			{
+				if (chessBoard[ii][jj] == blank)
+				{
+					chessBoard[ii][jj] = player;
+					regNeighbor(ii, jj);
+					break;
+				}
+			}
+		}
+		return 0;
 	}
-	else if (score == INT32_MAX)
+	/*else if (score == INT32_MAX)
 	{
 		return 2;
-	}
+	}*/
 	
 	chessBoard[i][j] = player;
 	chess_order.push_back(make_tuple(player, i, j));
