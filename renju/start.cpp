@@ -41,11 +41,12 @@ int main()
 			cout << "输入不合法，请重新输入" << endl;
 		}
 	}
+
 	string temp;
 	getline(cin, temp);
-
 	while (1)
 	{
+		
 		if( aiTurn == black)
 			cout << "电脑先手，您后手" << endl;
 		else
@@ -59,6 +60,7 @@ int main()
 				for (int j = 0; j < GRID_NUM; j++)
 				{
 					chessBoard[i][j] = blank;
+					statusBoard[i][j] = 0;
 				}
 		}
 		else // 否则游戏结束
@@ -72,6 +74,7 @@ int main()
 
 int new_game(int aiTurn)
 {
+	turnNum = 1;
 	if (aiTurn == black)
 	{
 		cout << "AI走棋" << endl;
@@ -126,10 +129,12 @@ int new_game(int aiTurn)
 				int game_end = -1;
 				if (temp == "newblack")
 				{
+					cin.clear();
 					return black;
 				}
 				else if (temp == "newwhite")
 				{
+					cin.clear();
 					return white;
 				}
 				else if (temp == "regret") // 悔棋
