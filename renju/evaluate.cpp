@@ -128,30 +128,50 @@ int evaluate_line(int* line, int length, int chess)
 				((h - 1 >= 0 && line[h - 1] == blank) + (h + 4 < length && line[h + 4] == blank) == 1)
 				)
 			{
-				score += 2500;
+				score += 2800;
 				h = h + 4;
 				continue;
 			}
 
 			//ËÀ4B/C
 			if (
-				(h+4<length && line[h + 4] == chess)
+				((h+4<length && line[h + 4] == chess)
 				&& ((line[h + 1] == chess) + (line[h + 2] == chess) + (line[h + 3] == chess) == 2)
-				&& ((line[h + 1] == blank) + (line[h + 2] == blank) + (line[h + 3] == blank) == 1)
+				&& ((line[h + 1] == blank) + (line[h + 2] == blank) + (line[h + 3] == blank) == 1))
+                ||
+                (
+                 (h + 3<length && line[h + 3] == chess)
+                && ((line[h + 1] == chess) + (line[h + 2] == chess) == 1)
+                && ((line[h + 1] == blank) + (line[h + 2] == blank) == 1)
+                && ((h - 1 >= 0 && line[h - 1] == blank) || (h + 4 < length && line[h + 4] == blank) ))
+                
 				)
 			{
-				score += 2800;
+				score += 2500;
 				h = h + 5;
 				continue;
 			}
 
-			//»î3
+			//»î3A
 			if (h - 1 >= 0 && line[h - 1] == blank && line[h + 1] == chess && line[h + 2] == chess && h + 3 < length && line[h + 3] == blank)
 				{
 					score += 3000;
 					h = h + 3;
 					continue;
 				}
+
+			//»î3B
+			if (
+				(h + 3 < length && line[h + 3] == chess)
+				&& ((line[h + 1] == chess) + (line[h + 2] == chess) == 1)
+				&& ((line[h + 1] == blank) + (line[h + 2] == blank) == 1)
+				&& ((h - 1 >= 0 && line[h - 1] == blank) && (h + 4 < length && line[h + 4] == blank))
+				)
+			{
+				score += 2200;
+				h = h + 3;
+				continue;
+			}
 
 			//ËÀ3A
 			if (
@@ -170,7 +190,7 @@ int evaluate_line(int* line, int length, int chess)
 				(h + 3<length && line[h + 3] == chess)
 				&& ((line[h + 1] == chess) + (line[h + 2] == chess) == 1)
 				&& ((line[h + 1] == blank) + (line[h + 2] == blank) == 1)
-				&& ((h - 1 >= 0 && line[h - 1] == blank) || (h + 4 < length && line[h + 4] == blank) )
+				&& ((h - 1 >= 0 && line[h - 1] == blank) + (h + 4 < length && line[h + 4] == blank)==1 )
 				)
 			{
 				score += 800;
