@@ -1,3 +1,3 @@
 #pragma once
 
-void input(int player);
+//void input(int player);

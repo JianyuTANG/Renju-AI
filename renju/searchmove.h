@@ -16,5 +16,6 @@ tuple<int, int, int> minValue(int player, int alpha, int beta, int depth, LINE* 
 int iterationDeepening(int player);
 
 void regNeighbor(int x, int y);
+void unregNeighbor(int x, int y);
 
 #endif
