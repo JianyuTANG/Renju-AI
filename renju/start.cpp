@@ -14,27 +14,6 @@ void replay();
 
 int main()
 {
-	for (int test = 0; test < 10; test++)
-	{
-		for (int i = 0; i < 15; i++)
-			for (int j = 0; j < 15; j++)
-			{
-				if (rand() < 3277*test)  //32767
-					chessBoard[i][j] = rand() % 2 + 1;
-			}
-		clock_t startTime, endTime;
-		startTime = clock();
-		for (int i = 0; i < 100000; i++)
-			evaluate();
-		endTime = clock();
-		cout << "Totle Time : " << (double)(endTime - startTime) << "ms" << endl;
-		for (int i = 0; i < 15; i++)
-			for (int j = 0; j < 15; j++)
-			{
-					chessBoard[i][j] = 0;
-			}
-	}
-
 	cout << "*************五子棋人机对弈AI*************" << endl;
 	cout << "输入: newblack  电脑先手" << endl;
 	cout << "输入: newwhite  电脑后手" << endl;
