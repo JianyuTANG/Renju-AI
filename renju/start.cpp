@@ -88,7 +88,7 @@ int new_game(int aiTurn)
 		if ((turnNum % 2) == (aiTurn % 2))
 		{
 			
-			int temp = iterationDeepening(aiTurn);
+			int temp = iterationDeepening(aiTurn); // AI行棋
 			if (temp == 1)
 			{
 				cout << "您已获胜" << endl;
@@ -103,7 +103,7 @@ int new_game(int aiTurn)
 		}
 		else
 		{
-			input(aiTurn);
+			input(aiTurn); // 玩家行棋
 		}
 		print();
 
@@ -132,7 +132,7 @@ int new_game(int aiTurn)
 				{
 					return white;
 				}
-				else if (temp == "regret")
+				else if (temp == "regret") // 悔棋
 				{
 					auto last_ai_chess = chess_record.back();
 					chess_record.pop_back();

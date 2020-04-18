@@ -18,11 +18,11 @@ using namespace std;
 #define black 1		//黑方
 #define white 2		//白方
 #define inf 1000000		
-#define inboard(a,b) (a>0 && a<=14 && b>0 && b<=14)		//用于检验招法是否在棋盘上
 #define nextTurn(player) (3 - player)
 
 
 #define GRID_NUM 15	//棋盘规模	
+#define inboard(a,b) (a>0 && a<GRID_NUM && b>0 && b<GRID_NUM)		//用于检验招法是否在棋盘上
 extern int chessBoard[GRID_NUM][GRID_NUM]; //棋盘
 extern int statusBoard[GRID_NUM][GRID_NUM]; //status
 extern int turnNum;
