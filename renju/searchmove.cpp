@@ -332,7 +332,8 @@ int iterationDeepening(int player)
 		if (mLine)
 			delete mLine;
 		mLine = cLine;
-
+		if (get<0>(ans) == INT32_MAX)
+			break;
 		if (duration.count() > 100)
 		{
 			cout << "timeout: level " << depth << endl;
@@ -347,6 +348,7 @@ int iterationDeepening(int player)
 	}*/
 	if (score == INT32_MIN)
 	{
+		cout << score << endl;
 		for (int ii = 1; ii < 15; ii++)
 		{
 			for (int jj = 1; jj < 15; jj++)
@@ -355,7 +357,8 @@ int iterationDeepening(int player)
 				{
 					chessBoard[ii][jj] = player;
 					regNeighbor(ii, jj);
-					break;
+					chess_record.push_back(make_tuple(player, ii, jj));
+					return 0;
 				}
 			}
 		}
