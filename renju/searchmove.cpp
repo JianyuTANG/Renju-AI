@@ -6,6 +6,9 @@
 #include "searchmove.h"
 #include <tuple>
 #include <chrono>
+#include <numeric>
+
+vector<int> branchesv;
 
 bool checkNeighbor(int x, int y)
 {
@@ -90,6 +93,7 @@ void unregNeighbor2(int x, int y)
 
 tuple<int, int, int> maxValue(int player, int alpha, int beta, int depth, LINE* mLine, LINE* cLine)
 {
+	int branches = 0;
 	if (gameover())
 	{
 		cLine->cmove = 0;
@@ -131,6 +135,7 @@ tuple<int, int, int> maxValue(int player, int alpha, int beta, int depth, LINE* 
 				regNeighbor2(i, j);
 				turnNum++;
 				auto temp = minValue(nextTurn(player), alpha, beta, depth - 1, mLine, &line);
+				branches++;
 				int val = get<0>(temp);
 				if (val > v)
 				{
@@ -142,6 +147,7 @@ tuple<int, int, int> maxValue(int player, int alpha, int beta, int depth, LINE* 
 						chessBoard[i][j] = blank;
 						turnNum--;
 						unregNeighbor2(i, j);
+						branchesv.push_back(branches);
 						return make_tuple(v, ai, aj);
 					}
 					if (v > alpha)
@@ -170,6 +176,7 @@ tuple<int, int, int> maxValue(int player, int alpha, int beta, int depth, LINE* 
 				regNeighbor2(i, j);
 				turnNum++;
 				auto temp = minValue(nextTurn(player), alpha, beta, depth - 1, NULL, &line);
+				branches++;
 				int val = get<0>(temp);
 				if (val > v)
 				{
@@ -181,6 +188,7 @@ tuple<int, int, int> maxValue(int player, int alpha, int beta, int depth, LINE* 
 						chessBoard[i][j] = blank;
 						turnNum--;
 						unregNeighbor2(i, j);
+						branchesv.push_back(branches);
 						return make_tuple(v, ai, aj);
 					}
 					if (v > alpha)
@@ -197,11 +205,13 @@ tuple<int, int, int> maxValue(int player, int alpha, int beta, int depth, LINE* 
 			}
 		}
 	}
+	branchesv.push_back(branches);
 	return make_tuple(v, ai, aj);
 }
 
 tuple<int, int, int> minValue(int player, int alpha, int beta, int depth, LINE* mLine, LINE* cLine)
 {
+	int branches = 0;
 	if (gameover())
 	{
 		cLine->cmove = 0;
@@ -224,6 +234,7 @@ tuple<int, int, int> minValue(int player, int alpha, int beta, int depth, LINE* 
 	int ai = 0, aj = 0;
 	LINE line;
 
+
 	if (mLine)
 	{
 		int t = 0;
@@ -244,6 +255,7 @@ tuple<int, int, int> minValue(int player, int alpha, int beta, int depth, LINE* 
 				regNeighbor2(i, j);
 				turnNum++;
 				auto temp = maxValue(nextTurn(player), alpha, beta, depth - 1, mLine, &line);
+				branches++;
 				int val = get<0>(temp);
 				if (val < v)
 				{
@@ -255,6 +267,7 @@ tuple<int, int, int> minValue(int player, int alpha, int beta, int depth, LINE* 
 						chessBoard[i][j] = blank;
 						turnNum--;
 						unregNeighbor2(i, j);
+						branchesv.push_back(branches);
 						return make_tuple(v, ai, aj);
 					}
 					if (v < beta)
@@ -282,6 +295,7 @@ tuple<int, int, int> minValue(int player, int alpha, int beta, int depth, LINE* 
 				regNeighbor2(i, j);
 				turnNum++;
 				auto temp = maxValue(nextTurn(player), alpha, beta, depth - 1, NULL, &line);
+				branches++;
 				int val = get<0>(temp);
 				if (val < v)
 				{
@@ -293,6 +307,7 @@ tuple<int, int, int> minValue(int player, int alpha, int beta, int depth, LINE* 
 						chessBoard[i][j] = blank;
 						turnNum--;
 						unregNeighbor2(i, j);
+						branchesv.push_back(branches);
 						return make_tuple(v, ai, aj);
 					}
 					if (v < beta)
@@ -309,6 +324,7 @@ tuple<int, int, int> minValue(int player, int alpha, int beta, int depth, LINE* 
 			}
 		}
 	}
+	branchesv.push_back(branches);
 	return make_tuple(v, ai, aj);
 }
 
@@ -334,18 +350,23 @@ int iterationDeepening(int player)
 		mLine = cLine;
 		if (get<0>(ans) == INT32_MAX)
 			break;
-		if (duration.count() > 100)
+		if (depth == 4)
 		{
-			cout << "timeout: level " << depth << endl;
+			cout << "time: " << duration.count() << endl;
+			auto sum = accumulate(branchesv.begin(), branchesv.end(), 0);
+			cout << "branch num: " << (sum / branchesv.size()) << endl;
+		}
+
+		branchesv.clear();
+		if (duration.count() > 1000)
+		{
+			//cout << "timeout: level " << depth << endl;
 			break;
 		}
 	}
 
 	int i = get<1>(ans), j = get<2>(ans), score = get<0>(ans);
-	/*if (i == 0 && j == 0)
-	{
-		cout << score << endl;
-	}*/
+
 	if (score == INT32_MIN)
 	{
 		cout << score << endl;
