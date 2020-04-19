@@ -6,6 +6,7 @@
 #include "searchmove.h"
 #include <tuple>
 #include <chrono>
+#include <numeric>
 
 bool checkNeighbor(int x, int y)
 {
@@ -334,9 +335,9 @@ int iterationDeepening(int player)
 		mLine = cLine;
 		if (get<0>(ans) == INT32_MAX)
 			break;
-		if (duration.count() > 100)
+		if (duration.count() > 200)
 		{
-			cout << "timeout: level " << depth << endl;
+			//cout << "timeout: level " << depth << endl;
 			break;
 		}
 	}
