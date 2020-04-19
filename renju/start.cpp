@@ -2,7 +2,6 @@
 #include "searchmove.h"
 #include "printchessboard.h"
 #include "makemove.h"
-#include "interaction.h"
 #include "evaluate.h"
 #include <conio.h>
 #include <chrono>
